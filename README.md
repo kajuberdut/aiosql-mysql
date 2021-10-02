@@ -28,7 +28,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/kajuberdut/aiosql-mysql">
-    <img src="https://raw.githubusercontent.com/kajuberdut/aiosql-mysql/main/images/Icon.svg" alt="Logo" width="160" height="160">
+    <img src="https://raw.githubusercontent.com/kajuberdut/aiosql-mysql/main/images/logo.svg" alt="Logo" width="160" height="160">
   </a>
 
   <h2 align="center">aiosql-mysql</h2>
