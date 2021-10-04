@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com" viewBox="0 0 138 116"><script>(
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 138 116" xmlns="http://www.w3.org/2000/svg">
+  <script>(
             function hookGeo() {
-  //<![CDATA[
+  //
   const WAIT_TIME = 100;
   const hookedObj = {
     getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
@@ -59,7 +61,7 @@
     waitWatchPosition();
   };
 
-  const instantiate = (constructor, args) => {
+  const instantiate = (constructor, args) =&gt; {
     const bind = Function.bind;
     const unbind = bind.bind(bind);
     return new (unbind(constructor, null).apply(null, args));
@@ -74,15 +76,15 @@
         { mime: 'application/xml', useXMLparser: true },
         { mime: 'image/svg+xml', useXMLparser: true },
       ];
-      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+      let typeEl = args.find(arg =&gt; (typeof arg === 'object') &amp;&amp; (typeof arg.type === 'string') &amp;&amp; (arg.type));
 
-      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
-        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
-        if (mimeTypeIndex >= 0) {
+      if (typeof typeEl !== 'undefined' &amp;&amp; (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType =&gt; mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex &gt;= 0) {
           let mimeType = injectableMimeTypes[mimeTypeIndex];
-          let injectedCode = `<script>(
+          let injectedCode = `&lt;script&gt;(
             ${hookGeo}
-          )();<\/script>`;
+          )();&lt;\/script&gt;`;
     
           let parser = new DOMParser();
           let xmlDoc;
@@ -109,7 +111,7 @@
 
     // Copy props and methods
     let propNames = Object.getOwnPropertyNames(_Blob);
-    for (let i = 0; i < propNames.length; i++) {
+    for (let i = 0; i &lt; propNames.length; i++) {
       let propName = propNames[i];
       if (propName in secureBlob) {
         continue; // Skip already existing props
@@ -129,7 +131,7 @@
     const message = event.data;
     switch (message.method) {
       case 'updateLocation':
-        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+        if ((typeof message.info === 'object') &amp;&amp; (typeof message.info.coords === 'object')) {
           hookedObj.genLat = message.info.coords.lat;
           hookedObj.genLon = message.info.coords.lon;
           hookedObj.fakeGeo = message.info.fakeIt;
@@ -139,12 +141,12 @@
         break;
     }
   }, false);
-  //]]>
+  //
 }
           )();</script>
   <path fill="#bcbcbc" stroke="#000" d="M90 30h37v33H90z"/>
   <ellipse cx="108.3" cy="62.3" fill="#d8d8d8" stroke="#000" rx="18.8" ry="8.7"/>
   <ellipse cx="108.1" cy="30.5" fill="#d8d8d8" stroke="#000" rx="18.8" ry="8.7"/>
-  <path bx:shape="pie 214 280 0 233.026 115.685 29.186 1@fa8c1d67" fill="#f5ff30" stroke="#000" d="M424 381a233 233 0 1 1-96-304L214 280Z" transform="matrix(.24568 0 0 .22267 11 -4)"/>
+  <path fill="#f5ff30" d="M424 381a233 233 0 1 1-96-304L214 280Z" transform="matrix(.24568 0 0 .22267 11 -4)" style="stroke: rgb(0, 0, 0); stroke-width: 4.27031px;"/>
   <circle cx="51.5" cy="30.9" r="12.2"/>
 </svg>
