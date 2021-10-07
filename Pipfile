@@ -4,11 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiomysql = "*"
+asyncmy = "*"
+cryptography = "*"
 
 [dev-packages]
 black = "*"
 ward = "*"
+docker = "*"
+tenacity = "*"
 
 [requires]
 python_version = "3.9"

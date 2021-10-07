@@ -64,7 +64,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-aiosql-mysql is a database adaptor intended to allow the use of [aiomysql](https://github.com/aio-libs/aiomysql) with [aiosql](https://github.com/nackjicholson/aiosql).
+aiosql-mysql is a database adaptor intended to allow the use of [asyncmy](https://github.com/long2ice/asyncmy) with [aiosql](https://github.com/nackjicholson/aiosql).
 
 
 ### Warning:
@@ -115,12 +115,12 @@ Indexing a document adds it to or updates it in the search store.
 ```python
 import asyncio
 import aiosql
-import aiomysql
+import asyncmy
 
 
-queries = aiosql.from_path("./greetings.sql", "aiomysql")
+queries = aiosql.from_path("./greetings.sql", "asyncmy")
 
- pool = await aiomysql.create_pool(host='127.0.0.1', port=3306,
+ pool = await asyncmy.create_pool(host='127.0.0.1', port=3306,
                                       user='root', password='',
                                       db='mysql', loop=loop)
 
