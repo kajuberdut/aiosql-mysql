@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 asyncmy = "*"
 cryptography = "*"
+pymysql = {extras = ["rsa"], version = "*"}
 
 [dev-packages]
 black = "*"

@@ -4,9 +4,8 @@ import string
 
 import asyncmy
 import docker
+import pymysql
 import tenacity
-from asyncmy import errors
-from asyncmy.cursors import DictCursor
 from ward import Scope, fixture, test
 
 DATABASE = "TestDatabase"
@@ -59,43 +58,72 @@ def db(port=port, password=password):
 
 
 @fixture(scope=Scope.Module)
-async def pool(port=port, password=password, db=db):
+async def a_connection(port=port, password=password, db=db):
     @tenacity.retry(
         reraise=True,
         stop=tenacity.stop_after_delay(120),
         wait=tenacity.wait_fixed(3),
-        retry=tenacity.retry_if_exception_type(errors.OperationalError),
+        retry=tenacity.retry_if_exception_type(asyncmy.errors.OperationalError),
     )
-    async def get_pool():
-        pool = await asyncmy.create_pool(
+    async def get_connection():
+        conn = await asyncmy.connect(
             host=HOST,
             port=port,
             user=ROOT_USER,
             password=password,
             db=DATABASE,
         )
-        return pool
+        return conn
 
-    pool = await get_pool()
-    yield pool
-    pool.close()
-
-
-@fixture(scope=Scope.Module)
-async def connection(pool=pool):
-    async with pool.acquire() as conn:
-        yield conn
+    conn = await get_connection()
+    yield conn
+    conn.close()
 
 
 @fixture(scope=Scope.Test)
-async def cursor(conn=connection):
-    async with conn.cursor(cursor=DictCursor) as cursor:
+async def a_cursor(conn=a_connection):
+    async with conn.cursor(cursor=asyncmy.cursors.DictCursor) as cursor:
         yield cursor
 
 
-@test("Connection Test")  # you can use markdown in these descriptions!
-async def test_example(cur=cursor):
-
+@test("Async Connection Test")
+async def _(cur=a_cursor):
     await cur.execute("SELECT 42 as thing;")
     result = await cur.fetchall()
+    assert result[0]["thing"] == 42
+
+
+@fixture(scope=Scope.Module)
+def b_connection(port=port, password=password, db=db):
+    @tenacity.retry(
+        reraise=True,
+        stop=tenacity.stop_after_delay(120),
+        wait=tenacity.wait_fixed(3),
+        retry=tenacity.retry_if_exception_type(asyncmy.errors.OperationalError),
+    )
+    def get_connection():
+        conn = pymysql.connect(
+            host=HOST,
+            port=port,
+            user=ROOT_USER,
+            password=password,
+            database=DATABASE,
+            cursorclass=pymysql.cursors.DictCursor,
+        )
+        return conn
+    conn = get_connection()
+    yield conn
+    conn.close()
+
+
+@fixture(scope=Scope.Test)
+def b_cursor(conn=b_connection):
+    with conn.cursor() as cursor:
+        yield cursor
+
+
+@test("Blocking Connection Test")
+def _(cur=b_cursor):
+    cur.execute("SELECT 42 as thing;")
+    result = cur.fetchall()
     assert result[0]["thing"] == 42
