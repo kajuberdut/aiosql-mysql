@@ -13,6 +13,7 @@ black = "*"
 ward = "*"
 docker = "*"
 tenacity = "*"
+aiosql-mysql = {editable = true, path = "."}
 
 [requires]
 python_version = "3.9"
