@@ -162,7 +162,7 @@ Contributions are what make the open source community such an amazing place to b
 2. Run tests
     ```sh
     pipenv shell
-    py.test
+    ward
     ```
   For more about pipenv see: [Pipenv Github](https://github.com/pypa/pipenv)
 
