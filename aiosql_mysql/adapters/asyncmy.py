@@ -1,14 +1,50 @@
 from collections import defaultdict
-
-from aiosql_mysql import utilities
 from contextlib2 import asynccontextmanager
+
+import re
+
+
+var_pattern = re.compile(
+    r'(?P<dblquote>"[^"]+")|'
+    r"(?P<quote>\'[^\']+\')|"
+    r"(?P<lead>[^:]):(?P<var_name>[\w-]+)(?P<trail>[^:]?)"
+)
 
 
 class AsyncMySQLAdapter:
     is_aio_driver = True
 
     def process_sql(self, query_name, _op_type, sql):
-        return utilities.sql_to_print_style(sql)
+        count = 0
+        adj = 0
+
+        for match in var_pattern.finditer(sql):
+            gd = match.groupdict()
+            # Do nothing if the match is found within quotes.
+            if gd["dblquote"] is not None or gd["quote"] is not None:
+                continue
+
+            var_name = gd["var_name"]
+            if var_name in self.var_sorted[query_name]:
+                replacement = f"${self.var_sorted.index(query_name)+1}"
+            else:
+                replacement = f"${len(self.var_sorted[query_name])+1}"
+                self.var_sorted[query_name].append(var_name)
+
+            start = match.start() + len(gd["lead"]) + adj
+            end = match.end() - len(gd["trail"]) + adj
+
+            sql = sql[:start] + replacement + sql[end:]
+
+            replacement_len = len(replacement)
+            # the lead ":" char is the reason for the +1
+            var_len = len(var_name) + 1
+            if replacement_len < var_len:
+                adj = adj + replacement_len - var_len
+            else:
+                adj = adj + var_len - replacement_len
+
+        return sql
 
     def maybe_order_params(self, query_name, parameters):
         if isinstance(parameters, dict):

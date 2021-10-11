@@ -56,6 +56,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#thanks">Thanks</a></li>
   </ol>
 </details>
 
@@ -68,7 +69,7 @@ aiosql-mysql is a database adaptor intended to allow the use of [asyncmy](https:
 
 
 ### Warning:
-This project is currently not functional. Please check back later.
+This project is in early developement. The PyMySQL adaptor works but is not fully tested. AsyncMy is not implimented and working at this time, please check back later.
 
 
 <!-- GETTING STARTED -->
@@ -85,64 +86,57 @@ For information about cloning and dev setup see: [Contributing](#Contributing)
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
+This is example is adapted from aiosql's readme.
 
 *users.sql*
 
 ```sql
 
-    -- name: get-all-users
-    -- Get all user records
-    select userid,
-           username,
-           firstname,
-           lastname
-      from users;
+-- name: get-user-by-username^
+SELECT *
+FROM users
+WHERE username = :username;
 
+-- name: create_users#
+CREATE TABLE users ( userid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                     username VARCHAR(100),
+                     firstname VARCHAR(100),
+                     lastname VARCHAR(100)
+);
 
-    -- name: get-user-by-username^
-    -- Get user with the given username field.
-    select userid,
-           username,
-           firstname,
-           lastname
-      from users
-     where username = :username;
+-- name: insert_bob!
+INSERT INTO users (username, firstname, lastname)
+VALUES ('bob', 'bob', 'smith');
+
 ```
 
-### Index
+### Blocking execution
 Indexing a document adds it to or updates it in the search store.
 ```python
-import asyncio
 import aiosql
-import asyncmy
+import pymysql
+from aiosql_mysql import PyMySQLAdaptor
 
+conn = pymysql.connect(
+        host="127.0.0.1",
+        port=3306,
+        user="root",
+        password="password",
+        database="ExampleDb",
+        cursorclass=pymysql.cursors.DictCursor,
+    )
 
-queries = aiosql.from_path("./greetings.sql", "asyncmy")
+queries = aiosql.from_path("./greetings.sql", PyMySQLAdaptor)
+queries.create_users(conn)
+queries.insert_bob(conn)
+result = queries.get_user_by_username(conn, username="bob")
+print(result)
+# {'userid': 1, 'username': 'bob', 'firstname': 'bob', 'lastname': 'smith'}
 
- pool = await asyncmy.create_pool(host='127.0.0.1', port=3306,
-                                      user='root', password='',
-                                      db='mysql', loop=loop)
-
-
-async def main():
-    # Parallel queries!!!
-    async with pool.acquire() as conn:
-        greetings, user = await asyncio.gather(
-            queries.get_all_greetings(conn),
-            queries.get_user_by_username(conn, username="harrypotter")
-        )
-        # greetings = [(1, "Hi"), (2, "Aloha"), (3, "Hola")]
-        # user = (1, "harrypotter", "Harry")
-
-        for _, greeting in greetings:
-            print(f"{greeting}, {user[2]}!")
-        # Hi, Harry!
-        # Aloha, Harry!
-        # Hola, Harry!
-
-asyncio.run(main())
 ```
+
+### Async execution
+**Coming Soon**
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -189,6 +183,14 @@ Patrick Shechet - patrick.shechet@gmail.com
 Project Link: [https://github.com/kajuberdut/aiosql-mysql](https://github.com/kajuberdut/aiosql-mysql)
 
 
+<!-- THANKS -->
+## Thanks
+This library would be pointless without:
+- [Will Vaughn, creator of aiosql](https://github.com/nackjicholson)
+- [The other contributors to aiosql](https://github.com/nackjicholson/aiosql/graphs/contributors)
+- [The PyMySql Team](https://github.com/PyMySQL/PyMySQL)
+- [Long2Ice, creator of asyncmy](https://github.com/long2ice)
+- [The aiomysql team who's work makes asyncmy possible](https://github.com/aio-libs/aiomysql/graphs/contributors)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->

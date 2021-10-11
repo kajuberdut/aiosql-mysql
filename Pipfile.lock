@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4ac71bd8fdb38239dd0ef5f6d2e24486947bba8517456a88de80adbcaa3cfb4b"
+            "sha256": "083abb9f0e7ee3467181d21f5e195687f380e4fa9a00495fb0d23457eabf902d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -126,6 +126,14 @@
         }
     },
     "develop": {
+        "aiosql": {
+            "hashes": [
+                "sha256:467067f2d237e2ccc47a3f651ae6bd128d89287a5dbf1357c065c9be37947cbc",
+                "sha256:e7144b0e96c2783b79002657497b3a16ee41068290adc1e89cf08cb3974c76fa"
+            ],
+            "index": "pypi",
+            "version": "==3.3.1"
+        },
         "aiosql-mysql": {
             "editable": true,
             "path": "."
@@ -187,6 +195,14 @@
                 "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"
             ],
             "version": "==0.9.1"
+        },
+        "contextlib2": {
+            "hashes": [
+                "sha256:3fbdb64466afd23abaf6c977627b75b6139a5a3e8ce38405c5b413aed7a0471f",
+                "sha256:ab1e2bfe1d01d968e1b7e8d9023bc51ef3509bba217bb730cee3827e1ee82869"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==21.6.0"
         },
         "cucumber-tag-expressions": {
             "hashes": [
@@ -401,7 +417,7 @@
                 "sha256:83fb3eff778beec3c55201455c17cccde1ccdf66d5b4dade8ef28f56b50c4bd4",
                 "sha256:c30d6808d1cd3defd56a7bd2d587d13e53b5f55de6cf587f035bcbb56bc3f37b"
             ],
-            "markers": "python_full_version >= '3.6.2' and python_full_version < '4.0.0'",
+            "markers": "python_version < '4' and python_full_version >= '3.6.2'",
             "version": "==10.12.0"
         },
         "shellingham": {
@@ -449,7 +465,7 @@
                 "sha256:4987c65554f7a2dbf30c18fd48778ef124af6fab771a377103da0585e2336ece",
                 "sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_full_version < '4.0.0'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
             "version": "==1.26.7"
         },
         "ward": {

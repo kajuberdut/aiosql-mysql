@@ -13,7 +13,7 @@ def replacer(match):
         return f'{gd["lead"]}%({gd["var_name"]})s{gd["trail"]}'
 
 
-class PsycoPG2Adapter:
+class PyMySQLAdaptor:
     @staticmethod
     def process_sql(_query_name, _op_type, sql):
         return utilities.sql_to_print_style(sql)
@@ -78,4 +78,3 @@ class PsycoPG2Adapter:
     def execute_script(conn, sql):
         with conn.cursor() as cur:
             cur.execute(sql)
-            return cur.statusmessage
