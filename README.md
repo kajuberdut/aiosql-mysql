@@ -171,7 +171,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the UnLicense. See `LICENSE` for more information.
+Distributed under the MIT. See `LICENSE` for more information.
 
 
 
@@ -203,7 +203,7 @@ This library would be pointless without:
 [stars-url]: https://github.com/kajuberdut/aiosql-mysql/stargazers
 [issues-shield]: https://img.shields.io/github/issues/kajuberdut/aiosql-mysql.svg?style=for-the-badge
 [issues-url]: https://github.com/kajuberdut/aiosql-mysql/issues
-[license-shield]: https://img.shields.io/badge/License-unlicense-orange.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/badge/License-MIT-orange.svg?style=for-the-badge
 [license-url]: https://github.com/kajuberdut/aiosql-mysql/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/patrick-shechet
