@@ -1,8 +1,8 @@
 from contextlib import contextmanager
 
 import aiosql
-import docker
 import asyncmy
+import docker
 import tenacity
 from aiosql_mysql import AsyncMySQLAdapter
 
@@ -41,13 +41,17 @@ async def get_connect():
     )
     return conn
 
+
 queries = aiosql.from_path("./users.sql", AsyncMySQLAdapter)
+
 
 async def main():
     conn = await get_connect()
 
     await queries.create_users(conn)
-    await queries.insert_user(conn,user_name='sbob', first_name='Bob', last_name='Smith')
+    await queries.insert_user(
+        conn, user_name="sbob", first_name="Bob", last_name="Smith"
+    )
     result = await queries.get_user_by_username(conn, username="sbob")
     print(result)
 

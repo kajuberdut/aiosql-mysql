@@ -138,7 +138,34 @@ print(result)
 For a more detailed and complete version of the above example see [pymysql_example.py](https://github.com/kajuberdut/aiosql-mysql/blob/main/examples/pymysql_example.py) & [users.sql](https://github.com/kajuberdut/aiosql-mysql/blob/main/examples/users.sql)
 
 ### Async execution
-**Coming Soon**
+```python 
+import aiosql
+import asyncmy
+from aiosql_mysql import AsyncMySQLAdapter
+
+queries = aiosql.from_path("./users.sql", AsyncMySQLAdapter)
+
+async def main():
+    conn = await asyncmy.connect(
+        host="127.0.0.1",
+        port=3306,
+        user="root",
+        password="password",
+        database="ExampleDb",
+    )
+
+    await queries.create_users(conn)
+    await queries.insert_user(conn,user_name='sbob', first_name='Bob', last_name='Smith')
+    result = await queries.get_user_by_username(conn, username="sbob")
+    print(result)
+
+
+if __name__ == "__main__":
+  import asyncio
+
+  asyncio.run(main())
+  # {'userid': 1, 'username': 'sbob', 'firstname': 'Bob', 'lastname': 'Smith'}
+```
 
 <!-- CONTRIBUTING -->
 ## Contributing
