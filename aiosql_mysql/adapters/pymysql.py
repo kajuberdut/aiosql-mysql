@@ -3,16 +3,6 @@ from contextlib import contextmanager
 from aiosql_mysql import utilities
 
 
-def replacer(match):
-    gd = match.groupdict()
-    if gd["dblquote"] is not None:
-        return gd["dblquote"]
-    elif gd["quote"] is not None:
-        return gd["quote"]
-    else:
-        return f'{gd["lead"]}%({gd["var_name"]})s{gd["trail"]}'
-
-
 class PyMySQLAdaptor:
     @staticmethod
     def process_sql(_query_name, _op_type, sql):

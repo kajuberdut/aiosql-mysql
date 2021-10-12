@@ -48,7 +48,7 @@ if __name__ == "__main__":
         conn = get_connect()
         
         queries.create_users(conn)
-        queries.insert_bob(conn)
-        result = queries.get_user_by_username(conn, username="bob")
+        queries.insert_user(conn,user_name='sbob', first_name='Bob', last_name='Smith')
+        result = queries.get_user_by_username(conn, username="sbob")
         print(result)
-# {'userid': 1, 'username': 'bob', 'firstname': 'bob', 'lastname': 'smith'}
+    # {'userid': 1, 'username': 'bob', 'firstname': 'bob', 'lastname': 'smith'}

@@ -11,6 +11,6 @@ CREATE TABLE users ( userid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                      lastname VARCHAR(100)
 );
 
--- name: insert_bob!
+-- name: insert_user!
 INSERT INTO users (username, firstname, lastname)
-VALUES ('bob', 'bob', 'smith');
+VALUES (:user_name, :first_name, :last_name);
