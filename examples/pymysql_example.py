@@ -44,7 +44,7 @@ def get_connect():
 
 if __name__ == "__main__":
     with get_docker() as container:
-        queries = aiosql.from_path("./greetings.sql", PyMySQLAdaptor)
+        queries = aiosql.from_path("./users.sql", PyMySQLAdaptor)
         conn = get_connect()
         
         queries.create_users(conn)

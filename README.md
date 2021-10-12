@@ -126,7 +126,7 @@ conn = pymysql.connect(
         cursorclass=pymysql.cursors.DictCursor,
     )
 
-queries = aiosql.from_path("./greetings.sql", PyMySQLAdaptor)
+queries = aiosql.from_path("./users.sql", PyMySQLAdaptor)
 queries.create_users(conn)
 queries.insert_bob(conn)
 result = queries.get_user_by_username(conn, username="bob")
@@ -134,6 +134,8 @@ print(result)
 # {'userid': 1, 'username': 'bob', 'firstname': 'bob', 'lastname': 'smith'}
 
 ```
+
+For a more detailed and complete version of the above example see [pymysql_example.py](https://github.com/kajuberdut/aiosql-mysql/blob/main/examples/pymysql_example.py) & [users.sql](https://github.com/kajuberdut/aiosql-mysql/blob/main/examples/users.sql)
 
 ### Async execution
 **Coming Soon**
@@ -191,6 +193,7 @@ This library would be pointless without:
 - [The PyMySql Team](https://github.com/PyMySQL/PyMySQL)
 - [Long2Ice, creator of asyncmy](https://github.com/long2ice)
 - [The aiomysql team who's work makes asyncmy possible](https://github.com/aio-libs/aiomysql/graphs/contributors)
+- Many Many others in the Python and Open Source communities
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
