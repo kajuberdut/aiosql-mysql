@@ -166,6 +166,7 @@ if __name__ == "__main__":
   asyncio.run(main())
   # {'userid': 1, 'username': 'sbob', 'firstname': 'Bob', 'lastname': 'Smith'}
 ```
+For a more detailed and complete version of the above example see [asyncmy_example.py](https://github.com/kajuberdut/aiosql-mysql/blob/main/examples/asyncmy_example.py) & [users.sql](https://github.com/kajuberdut/aiosql-mysql/blob/main/examples/users.sql)
 
 <!-- CONTRIBUTING -->
 ## Contributing
