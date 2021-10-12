@@ -45,6 +45,16 @@ class PyMySQLAdaptor:
             yield cur
 
     @staticmethod
+    def insert_returning(conn, _query_name, sql, parameters):
+        with conn.cursor() as cur:
+            cur.execute(sql, parameters)
+            res = cur.fetchone()
+            if res:
+                return res[0] if len(res) == 1 else res
+            else:
+                return None
+
+    @staticmethod
     def insert_update_delete(conn, _query_name, sql, parameters):
         with conn.cursor() as cur:
             cur.execute(sql, parameters)
@@ -54,15 +64,6 @@ class PyMySQLAdaptor:
         with conn.cursor() as cur:
             cur.executemany(sql, parameters)
 
-    @staticmethod
-    def insert_returning(conn, _query_name, sql, parameters):
-        with conn.cursor() as cur:
-            cur.execute(sql, parameters)
-            res = cur.fetchone()
-            if res:
-                return res[0] if len(res) == 1 else res
-            else:
-                return None
 
     @staticmethod
     def execute_script(conn, sql):

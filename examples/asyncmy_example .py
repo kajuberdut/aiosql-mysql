@@ -2,9 +2,9 @@ from contextlib import contextmanager
 
 import aiosql
 import docker
-import pymysql
+import asyncmy
 import tenacity
-from aiosql_mysql import PyMySQLAdaptor
+from aiosql_mysql import AsyncMySQLAdapter
 
 
 @contextmanager
@@ -28,27 +28,33 @@ def get_docker():
 
 @tenacity.retry(
     reraise=True,
-    stop=tenacity.stop_after_delay(120),
+    stop=tenacity.stop_after_delay(60),
     wait=tenacity.wait_fixed(3),
 )
-def get_connect():
-    return pymysql.connect(
+async def get_connect():
+    conn = await asyncmy.connect(
         host="127.0.0.1",
         port=3306,
         user="root",
         password="password",
         database="ExampleDb",
-        cursorclass=pymysql.cursors.DictCursor,
     )
+    return conn
+
+queries = aiosql.from_path("./users.sql", AsyncMySQLAdapter)
+
+async def main():
+    conn = await get_connect()
+
+    await queries.create_users(conn)
+    await queries.insert_user(conn,user_name='sbob', first_name='Bob', last_name='Smith')
+    result = await queries.get_user_by_username(conn, username="sbob")
+    print(result)
 
 
 if __name__ == "__main__":
+    import asyncio
+
     with get_docker() as container:
-        queries = aiosql.from_path("./users.sql", PyMySQLAdaptor)
-        conn = get_connect()
-        
-        queries.create_users(conn)
-        queries.insert_user(conn,user_name='sbob', first_name='Bob', last_name='Smith')
-        result = queries.get_user_by_username(conn, username="sbob")
-        print(result)
+        asyncio.run(main())
     # {'userid': 1, 'username': 'sbob', 'firstname': 'Bob', 'lastname': 'Smith'}

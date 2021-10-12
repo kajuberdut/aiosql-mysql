@@ -1,1 +1,2 @@
 from aiosql_mysql.adapters.pymysql import PyMySQLAdaptor
+from aiosql_mysql.adapters.asyncmy import AsyncMySQLAdapter
