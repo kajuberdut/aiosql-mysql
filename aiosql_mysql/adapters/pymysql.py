@@ -48,11 +48,7 @@ class PyMySQLAdaptor:
     def insert_returning(conn, _query_name, sql, parameters):
         with conn.cursor() as cur:
             cur.execute(sql, parameters)
-            res = cur.fetchone()
-            if res:
-                return res[0] if len(res) == 1 else res
-            else:
-                return None
+            return cur.lastrowid
 
     @staticmethod
     def insert_update_delete(conn, _query_name, sql, parameters):

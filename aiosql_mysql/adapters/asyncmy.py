@@ -45,11 +45,7 @@ class AsyncMySQLAdapter:
     async def insert_returning(self, conn, query_name, sql, parameters):
         async with conn.cursor(cursor=DictCursor) as cur:
             await cur.execute(sql, parameters)
-            res = await cur.fetchone()
-            if res:
-                return res[0] if len(res) == 1 else res
-            else:
-                return None
+            return cur.lastrowid
 
     async def insert_update_delete(self, conn, query_name, sql, parameters):
         async with conn.cursor(cursor=DictCursor) as cur:
